@@ -1,46 +1,88 @@
-/*=============== toggle icon navbar ========= */
-let menuIcon = document.querySelector("#menu-icon");
-let navbar = document.querySelector(".navbar");
-menuIcon.onclick = () => {
-  menuIcon.classList.toggle("bx-x");
-  navbar.classList.toggle("active");
-};
+$(document).ready(function () {
+  $(window).scroll(function () {
+    // sticky navbar on scroll script
+    if (this.scrollY > 20) {
+      $(".navbar").addClass("sticky");
+    } else {
+      $(".navbar").removeClass("sticky");
+    }
 
-/*=============== scroll section avtive link ========= */
-let section = document.querySelectorAll("section");
-let navlinks = document.querySelectorAll("header nav a ");
-
-window.onscroll = () => {
-  section.forEach((sec) => {
-    let top = window.scrollY;
-    let offset = sec.offsetTop - 150;
-    let height = sec.offsetHeight;
-    let id = sec.attributeStyleMap("id");
-    if (top >= offset && top < offset + height) {
-      navlinks.forEach((links) => {
-        links.classList.remove("active");
-        document
-          .querySelectorAll("header nav a[href*=" + id + "]")
-          .classlist.add("active");
-      });
+    // scroll-up button show/hide script
+    if (this.scrollY > 500) {
+      $(".scroll-up-btn").addClass("show");
+    } else {
+      $(".scroll-up-btn").removeClass("show");
     }
   });
-  /*=================== sticky navbar =============*/
-  let header = document.querySelectorAll("header");
-  header.classList.toggle("sticky", window.scrolly > 100);
-  /*==================== remove toggle icon and navabar when click navbar link(scroll)=====*/
-  menuIcon.classList.remove("bx-x");
-  navbar.classList.remove("active");
-};
-/*============= sticky navbar==============*/
-ScrollReveal({
-  reset: true,
-  distance: "80px",
-  duration: 2000,
-  delay: 200,
+
+  // slide-up script
+  $(".scroll-up-btn").click(function () {
+    $("html").animate({ scrollTop: 0 });
+    // removing smooth scroll on slide-up button click
+    $("html").css("scrollBehavior", "auto");
+  });
+
+  $(".navbar .menu li a").click(function () {
+    // applying again smooth scroll on menu items click
+    $("html").css("scrollBehavior", "smooth");
+  });
+
+  // toggle menu/navbar script
+  $(".menu-btn").click(function () {
+    $(".navbar .menu").toggleClass("active");
+    $(".menu-btn i").toggleClass("active");
+  });
+
+  // typing text animation script
+  var typed = new Typed(".typing", {
+    strings: ["Developer", "Blogger", "Designer", "Freelancer"],
+    typeSpeed: 100,
+    backSpeed: 60,
+    loop: true,
+  });
+
+  var typed = new Typed(".typing-2", {
+    strings: ["Developer", "Blogger", "Designer", "Freelancer"],
+    typeSpeed: 100,
+    backSpeed: 60,
+    loop: true,
+  });
+
+  // owl carousel script
+  $(".carousel").owlCarousel({
+    margin: 20,
+    loop: true,
+    autoplay: true,
+    autoplayTimeOut: 100,
+    autoplayHoverPause: true,
+    responsive: {
+      0: {
+        items: 1,
+        nav: false,
+      },
+      600: {
+        items: 2,
+        nav: false,
+      },
+      1000: {
+        items: 3,
+        nav: false,
+      },
+    },
+  });
+  // CV alert
+  $(document).on("click", "#link", function () {
+    confirm("Continue download the CV");
+  });  
+  
+
+  //navmenu
+  const toggleBtn = document.querySelector(".toggle-btn");
+  const menu = document.querySelector(".menu-container");
+  toggleBtn.addEventListener("click", () => {
+    menu.classList.toggle("show");
+  });
+
 });
-ScrollReveal().reveal(".home-content ,.heading", { orginal: "top" });
-ScrollReveal().reveal(
-  ".home-img ,.services-container , .portfolio-box, .contact form",
-  { orginal: "bottom" }
-);
+
+          
